@@ -3,7 +3,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
 import { v4 as uuidv4 } from "uuid";
 
-const Board = () => {
+const Board = ({ col1, col2, col3 }) => {
   const [todo, setTodo] = useState([]);
   const [inprog, setInprog] = useState([]);
   const [done, setDone] = useState([]);
@@ -79,10 +79,10 @@ const Board = () => {
 
   return (
     <div>
-      <div className="flex justify-center mb-10 mt-10">
+      <div className="flex justify-center mb-10 mt-5">
         {!isform ? (
           <button
-            className="p-3 text-xl font-semibold font-opensans bg-slate-700 rounded-md"
+            className="p-3 text-xl font-semibold font-opensans border border-black rounded-md"
             onClick={() => setIsform(!isform)}
           >
             Create Ticket
@@ -114,12 +114,12 @@ const Board = () => {
             <div className="flex flex-row justify-center gap-4">
               <button
                 type="submit"
-                className="p-2 text-xl font-semibold font-opensans bg-blue-900 rounded-md"
+                className="p-2 text-xl font-semibold font-opensans bg-blue-500 rounded-md"
               >
                 Create
               </button>
               <button
-                className="p-2 text-xl font-semibold font-opensans bg-slate-700 rounded-md"
+                className="p-2 text-xl font-semibold font-opensans bg-slate-500 rounded-md"
                 onClick={() => setIsform(!isform)}
               >
                 Cancel
@@ -130,14 +130,27 @@ const Board = () => {
       </div>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="flex flex-row justify-center gap-10">
-          <Column title={"To Do"} tickets={todo} id={"1"} col={"bg-gray-300"} />
+          <Column
+            title={"To Do"}
+            tickets={todo}
+            setTickets={setTodo}
+            id={"1"}
+            col={col1}
+          />
           <Column
             title={"In Progress"}
             tickets={inprog}
+            setTickets={setInprog}
             id={"2"}
-            col={"bg-cyan-500"}
+            col={col2}
           />
-          <Column title={"Done"} tickets={done} id={"3"} col={"bg-green-600"} />
+          <Column
+            title={"Done"}
+            tickets={done}
+            setTickets={setDone}
+            id={"3"}
+            col={col3}
+          />
         </div>
       </DragDropContext>
     </div>

@@ -1,7 +1,11 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { FaTrash } from "react-icons/fa";
 
-const Ticket = ({ ticket, index, col }) => {
+const Ticket = ({ tickets, setTickets, ticket, index, col }) => {
+  const handleDelete = () => {
+    setTickets(tickets.filter((item) => item.id !== ticket.id));
+  };
   return (
     <Draggable draggableId={`${ticket.id}`} key={ticket.id} index={index}>
       {(provided, snapshot) => (
@@ -12,11 +16,16 @@ const Ticket = ({ ticket, index, col }) => {
           isDragging={snapshot.isDragging}
         >
           <div
-            className={`flex-col border border-white rounded-xl ${col} text-black text-ellipsis my-3 p-2`}
+            className={`flex-col border border-white rounded-xl bg-${col} text-black text-ellipsis my-3 p-2`}
           >
-            <p className=" text-xl font-opensans font-semibold">
-              {ticket.title}
-            </p>
+            <div className="flex justify-between">
+              <p className=" text-lg font-opensans font-semibold">
+                {ticket.title}
+              </p>
+              <button onClick={() => handleDelete()}>
+                <FaTrash />
+              </button>
+            </div>
             <p>{ticket.description}</p>
           </div>
           {provided.placeholder}
