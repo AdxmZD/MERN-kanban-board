@@ -16,7 +16,7 @@ const Ticket = ({ tickets, setTickets, ticket, index, col }) => {
           isDragging={snapshot.isDragging}
         >
           <div
-            className={`flex-col border border-white rounded-xl bg-${col} text-black text-ellipsis my-3 p-2`}
+            className={`flex-col border border-white rounded-xl bg-[#e28c1f] text-black text-ellipsis my-3 p-2`}
           >
             <div className="flex justify-between">
               <p className=" text-lg font-opensans font-semibold">

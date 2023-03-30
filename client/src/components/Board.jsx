@@ -3,7 +3,10 @@ import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
 import { v4 as uuidv4 } from "uuid";
 
-const Board = ({ col1, col2, col3 }) => {
+const Board = () => {
+  const col1 = "red";
+  const col2 = "orange";
+  const col3 = "green";
   const [todo, setTodo] = useState([]);
   const [inprog, setInprog] = useState([]);
   const [done, setDone] = useState([]);
@@ -82,7 +85,7 @@ const Board = ({ col1, col2, col3 }) => {
       <div className="flex justify-center mb-10 mt-5">
         {!isform ? (
           <button
-            className="p-3 text-xl font-semibold font-opensans border border-black rounded-md"
+            className="p-3 text-xl font-semibold font-opensans border bg-[#167891] border-black rounded-md"
             onClick={() => setIsform(!isform)}
           >
             Create Ticket

@@ -5,10 +5,10 @@ import Ticket from "./Ticket";
 const Column = ({ title, tickets, setTickets, id, col }) => {
   return (
     <div
-      className={`flex flex-col border border-${col} rounded-xl w-[300px] min-h-[600px] overflow-hidden`}
+      className={`flex flex-col border bg-[#167891] rounded-xl w-[300px] min-h-[600px] overflow-hidden`}
     >
       <div
-        className={`p-4 text-center text-xl font-opensans font-semibold border-b border-${col}`}
+        className={`p-4 text-center text-xl font-opensans font-semibold border-b border-black `}
       >
         {title}
       </div>
