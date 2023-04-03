@@ -11,6 +11,6 @@ body,
 #root,
 .app {
   height: 100%;
-  background-color: #0e214b;
+  background-color: transparent;
   @apply text-black;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { FaTrash } from "react-icons/fa";
 
-const Ticket = ({ tickets, setTickets, ticket, index, col }) => {
+const Ticket = ({ tickets, setTickets, ticket, index }) => {
   const handleDelete = () => {
     setTickets(tickets.filter((item) => item.id !== ticket.id));
   };
@@ -16,17 +16,30 @@ const Ticket = ({ tickets, setTickets, ticket, index, col }) => {
           isDragging={snapshot.isDragging}
         >
           <div
-            className={`flex-col border border-white rounded-xl bg-[#e28c1f] text-black text-ellipsis my-3 p-2`}
+            className={`flex-col rounded-md bg-[#ffffff] text-black text-ellipsis px-2 pb-1 my-2`}
           >
-            <div className="flex justify-between">
-              <p className=" text-lg font-opensans font-semibold">
+            <div className="flex flex-col">
+              <p className="text-md font-opensans font-semibold mt-3">
                 {ticket.title}
               </p>
-              <button onClick={() => handleDelete()}>
-                <FaTrash />
-              </button>
+
+              <p className="object-contain">{ticket.description}</p>
+              <div className="flex flex-row justify-between border-t">
+                {ticket.points === "1" ? (
+                  <p className="text-gray-500 mt-3">
+                    {`${ticket.points}`} point
+                  </p>
+                ) : (
+                  <p className="text-gray-500 mt-3">
+                    {`${ticket.points}`} points
+                  </p>
+                )}
+
+                <button className="px-2" onClick={() => handleDelete()}>
+                  <FaTrash />
+                </button>
+              </div>
             </div>
-            <p>{ticket.description}</p>
           </div>
           {provided.placeholder}
         </div>

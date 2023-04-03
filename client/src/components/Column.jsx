@@ -1,16 +1,16 @@
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Ticket from "./Ticket";
+import CreateTicket from "./CreateTicket";
 
-const Column = ({ title, tickets, setTickets, id, col }) => {
+const Column = ({ title, tickets, setTickets, id }) => {
   return (
     <div
-      className={`flex flex-col border bg-[#167891] rounded-xl w-[300px] min-h-[600px] overflow-hidden`}
+      className={`flex flex-col rounded-md bg-[#bebebede] w-[350px] min-h-[600px] overflow-hidden`}
     >
-      <div
-        className={`p-4 text-center text-xl font-opensans font-semibold border-b border-black `}
-      >
-        {title}
+      <div className="flex flex-row  justify-between p-2 text-lg font-opensans font-semibold px-3">
+        <span>{title}</span>
+        <CreateTicket tickets={tickets} setTickets={setTickets} />
       </div>
 
       <Droppable droppableId={id}>
@@ -29,13 +29,14 @@ const Column = ({ title, tickets, setTickets, id, col }) => {
                   ticket={ticket}
                   key={index}
                   index={index}
-                  col={col}
                 />
               ))}
             {provided.placeholder}
           </div>
         )}
       </Droppable>
+
+      <div className=""></div>
     </div>
   );
 };
