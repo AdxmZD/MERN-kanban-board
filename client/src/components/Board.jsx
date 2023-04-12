@@ -1,18 +1,16 @@
 import { React, useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
+import axios from "axios";
 
-const Board = () => {
+const Board = ({ user }) => {
   const [todo, setTodo] = useState([]);
   const [inprog, setInprog] = useState([]);
   const [done, setDone] = useState([]);
+  const [board, setBoard] = useState({});
 
   const handleDragEnd = (result) => {
     const { destination, source, draggableId } = result;
-
-    console.log(source.droppableId);
-    console.log(draggableId);
-    console.log(destination.droppableId);
 
     // IF SOURCE AND DESTINATION ARE THE SAME. DO NOTHING
 
@@ -44,17 +42,29 @@ const Board = () => {
   };
 
   function findItemById(id, array) {
-    return array.find((item) => item.id === id);
+    return array.find((item) => item._id === id);
   }
 
   function removeItemById(id, array) {
-    return array.filter((item) => item.id !== id);
+    return array.filter((item) => item._id !== id);
   }
 
+  const getTickets = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/user/${user.username}/board`
+      );
+      setBoard(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    console.log(todo);
-    console.log(inprog);
-    console.log(done);
+    getTickets();
+    setTodo(board.todo);
+    setInprog(board.inprog);
+    setDone(board.completed);
   }, [todo, inprog, done]);
 
   return (
@@ -66,14 +76,25 @@ const Board = () => {
             tickets={todo}
             setTickets={setTodo}
             id={"1"}
+            user={user}
+            action={"todo"}
           />
           <Column
             title={"In Progress"}
             tickets={inprog}
             setTickets={setInprog}
             id={"2"}
+            user={user}
+            action={"inprog"}
           />
-          <Column title={"Done"} tickets={done} setTickets={setDone} id={"3"} />
+          <Column
+            title={"Done"}
+            tickets={done}
+            setTickets={setDone}
+            id={"3"}
+            user={user}
+            action={"completed"}
+          />
         </div>
       </DragDropContext>
     </div>

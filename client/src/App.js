@@ -1,5 +1,6 @@
 import Board from "./components/Board";
 import React, { useState } from "react";
+import axios from "axios";
 import RainbowBg from "./assets/rainbowbg.jpg";
 
 function App() {
@@ -8,19 +9,46 @@ function App() {
   const [formType, setFormType] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState({});
 
   const handleLogin = async () => {
     // Implement login API call and set token
-    setLoggedIn(true);
-    setFormType(null);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/login`,
+        {
+          username,
+          password,
+        }
+      );
+      console.log(response.data);
+      setUser(response.data.user);
+      setLoggedIn(true);
+      setFormType(null);
+    } catch (error) {
+      throw error.response.data;
+    }
   };
 
   const handleRegister = async () => {
     // Implement register API call
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/register`,
+        {
+          username,
+          password,
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      throw error.response.data;
+    }
     setFormType(null);
   };
 
   const handleLogout = () => {
+    setUser({});
     setLoggedIn(false);
     setToken(null);
   };
@@ -111,7 +139,7 @@ function App() {
             )}
           </div>
         ) : (
-          <Board token={token} />
+          <Board token={token} user={user} />
         )}
       </div>
     </div>

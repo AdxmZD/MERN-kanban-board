@@ -4,10 +4,10 @@ import { FaTrash } from "react-icons/fa";
 
 const Ticket = ({ tickets, setTickets, ticket, index }) => {
   const handleDelete = () => {
-    setTickets(tickets.filter((item) => item.id !== ticket.id));
+    setTickets(tickets.filter((item) => item._id !== ticket._id));
   };
   return (
-    <Draggable draggableId={`${ticket.id}`} key={ticket.id} index={index}>
+    <Draggable draggableId={`${ticket._id}`} key={ticket._id} index={index}>
       {(provided, snapshot) => (
         <div
           {...provided.draggableProps}

@@ -3,28 +3,39 @@ import Button from "react-bootstrap/Button";
 import { BiAddToQueue } from "react-icons/bi";
 import Modal from "react-bootstrap/Modal";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
-const CreateTicket = ({ tickets, setTickets }) => {
+const CreateTicket = ({ tickets, setTickets, user, action }) => {
   const [show, setShow] = useState(false);
   const [ticket, setTicket] = useState({
     title: "",
     description: "",
     points: "0",
-    id: uuidv4(),
+    _id: uuidv4(),
   });
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const createTicket = () => {
-    setTickets([...tickets, ticket]);
+  const createTicket = async () => {
+    try {
+      const { _id, title, description, points } = ticket;
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/user/${user.username}/board/${action}`,
+        { title, description, points, _id }
+      );
+      console.log(response.data);
+      setTickets([...tickets, ticket]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     createTicket();
-    setTicket({ title: "", description: "", points: "0", id: uuidv4() });
+    setTicket({ title: "", description: "", points: "0", _id: uuidv4() });
     console.log(ticket);
     handleClose();
   };

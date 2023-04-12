@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
+const Board = require("./models/board.model");
 
 const userSchema = new Schema({
-  userId: String,
-  username: String,
-  password: String,
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  board: { type: boardSchema, default: () => ({}) },
 });
 
 const User = mongoose.model("User", userSchema);
